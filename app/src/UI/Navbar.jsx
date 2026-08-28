@@ -6,14 +6,14 @@ export const NavBar = () => {
         <>
             <header className="flex justify-between px-30 py-3 border-b border-brand-gold-dim/25 bg-brand-ink">
                 <div className="h-12 w-12">
-                    <img src={logo} alt="LidorFX Logo"/>
+                    <img src={logo} alt="לוגו LidorFX"/>
                 </div>
                 <div className="flex gap-6 font-normal justify-center items-center">
-                    <Button className="text-brand-muted font-medium bg-transparent hover:bg-transparent">
-                        <h3>מי אני</h3>
+                    <Button asChild className="text-brand-muted font-medium bg-transparent hover:bg-transparent">
+                        <a href="#results"><h3>תוצאות</h3></a>
                     </Button>
-                    <Button className="text-brand-muted font-medium bg-transparent hover:bg-transparent">
-                        <h3>תוצאות</h3>
+                    <Button asChild className="text-brand-muted font-medium bg-transparent hover:bg-transparent">
+                        <a href="#about"><h3>מי אני</h3></a>
                     </Button>
                     <Button className="text-brand-muted font-medium bg-transparent hover:bg-transparent">
                         <h3>מסלולים</h3>
