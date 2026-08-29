@@ -37,14 +37,6 @@ export const Data = () => {
                         תיקים בניהול השיטה
                     </p>
                 </div>
-                <div className="flex-1 py-6 px-4">
-                    <h2 className="text-[40px] text-brand-gold">
-                        24/6
-                    </h2>
-                    <p className="text-brand-text-2">
-                        זמינות וליווי אישי
-                    </p>
-                </div>
             </div>
         </>
     )

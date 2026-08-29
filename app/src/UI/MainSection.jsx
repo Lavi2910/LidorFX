@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 
 export const MainSection = () => {
     return (
-        <div className="relative bg-gradient-to-b from-brand-abyss via-brand-surface to-brand-ink">
+        <div className="relative bg-gradient-to-b from-brand-abyss via-brand-surface to-brand-ink pb-10">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-[radial-gradient(ellipse_100%_100%_at_50%_0%,rgba(244,184,66,0.08),transparent_85%)]" />
             <div className="relative z-10 flex flex-row px-30 mt-10 py-3">
                 <div className="w-2/3 text-right flex flex-col justify-center">
