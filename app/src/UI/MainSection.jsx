@@ -17,7 +17,7 @@ export const MainSection = () => {
 
                     <div className="mt-8 space-y-1 text-brand-text-2">
                         <p>שיטה סיסטמטית, ליווי אישי, וקהילה שעובדת יחד.</p>
-                        <p>בלי הבטחות רווח – עם תוצאות שאפשר לבדוק.</p>
+                        <p>בלי הבטחות מיותרות – עם תוצאות שאפשר לבדוק.</p>
                     </div>
 
                     <div className="mt-10 flex flex-wrap gap-4 lg:gap-7">
