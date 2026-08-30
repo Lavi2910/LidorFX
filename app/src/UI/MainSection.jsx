@@ -1,42 +1,42 @@
 import LidorProfile from "../assets/Lidor-Pic-1.png"
-import { Button } from "@/components/ui/button"
+import { CTAButton } from "./Components/CTAButton"
+import { LINKS } from "@/lib/links"
 
 export const MainSection = () => {
     return (
-        <div className="relative bg-gradient-to-b from-brand-abyss via-brand-surface to-brand-ink pb-10">
+        <section className="relative bg-gradient-to-b from-brand-abyss via-brand-surface to-brand-ink pb-10">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-[radial-gradient(ellipse_100%_100%_at_50%_0%,rgba(244,184,66,0.08),transparent_85%)]" />
-            <div className="relative z-10 flex flex-row px-30 mt-10 py-3">
-                <div className="w-2/3 text-right flex flex-col justify-center">
-                    <h1 className="text-brand-text">
+
+            <div className="relative z-10 mx-auto flex max-w-[1500px] flex-col items-center gap-10 px-6 py-12 md:px-16 lg:flex-row lg:gap-16 lg:px-30 lg:py-16">
+                <div className="w-full text-right lg:w-3/5">
+                    <h1 className="m-0 text-brand-text">
                         שיטה שמייצרת <span className="text-brand-gold">תוצאות</span>
-                    </h1>
-                    <h1 className="text-brand-text">
+                        <br />
                         <span className="text-brand-gold">ליווי אישי</span> בשוק ההון ובקריפטו
                     </h1>
-                    <p className="text-brand-text-2 mt-10">
-                        שיטה מוכחת, ליווי אישי, וקהילת סוחרים שמרוויחה יחד.
-                    </p>
-                    <p className="text-brand-text-2">
-                        בלי הבטחות באוויר - עם תוצאות שאפשר לראות.
-                    </p>
-                    <div className="flex flex-row mt-10 gap-7">
-                        <Button className="text-brand-ink bg-brand-gold-dim py-3 h-auto hover:bg-brand-gold rounded-sm px-7 font-bold text-center shadow-[0_0_35px_-5px_rgba(255,201,77,0.35)]">
-                            <h2 className="m-0">
-                                בחר מסלול
-                            </h2>
-                        </Button>
-                        <Button className="text-brand-text-2 bg-transparent py-3 h-auto hover:bg-transparent border border-brand-text-2 rounded-sm px-3 text-center hover:border-brand-gold hover:text-brand-gold">
-                            <h2 className="m-0 font-light">
-                                תלמידים מספרים
-                            </h2>
-                        </Button>
+
+                    <div className="mt-8 space-y-1 text-brand-text-2">
+                        <p>שיטה סיסטמטית, ליווי אישי, וקהילה שעובדת יחד.</p>
+                        <p>בלי הבטחות רווח – עם תוצאות שאפשר לבדוק.</p>
+                    </div>
+
+                    <div className="mt-10 flex flex-wrap gap-4 lg:gap-7">
+                        <CTAButton href={LINKS.pricing}>לראות את המסלולים</CTAButton>
+                        <CTAButton href={LINKS.results} variant="secondary">
+                            תלמידים מספרים
+                        </CTAButton>
                     </div>
                 </div>
-                <div className="w-1/3 relative isolate">
-                    <div className="absolute inset-0 m-auto w-full h-full rounded-full bg-brand-gold/5 blur-3xl -z-10" />
-                    <img src={LidorProfile} alt="תמונת הפרופיל של לידור מלכה" className="relative" />
+
+                <div className="relative isolate mx-auto w-full max-w-[320px] lg:mx-0 lg:w-2/5 lg:max-w-none">
+                    <div className="absolute inset-0 -z-10 m-auto h-full w-full rounded-full bg-brand-gold/5 blur-3xl" />
+                    <img
+                        src={LidorProfile}
+                        alt="תמונת הפרופיל של לידור מלכה"
+                        className="relative w-full"
+                    />
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

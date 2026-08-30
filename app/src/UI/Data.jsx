@@ -1,43 +1,31 @@
-
-
+const STATS = [
+  { value: "6+", label: "שנות מסחר" },
+  { value: "200+", label: "תלמידים בליווי אישי" },
+  { value: "3.3M₪", label: "במשיכות של תלמידים", ltr: true },
+  { value: "24/6", label: "מענה אישי" },
+];
 
 export const Data = () => {
-    return(
-        <>
-            <div className="flex flex-row items-center text-center bg-brand-abyss border-y divide-x divide-brand-gold-dim/25 border-brand-gold-dim/25">
-                <div className="flex-1 py-6 px-4">
-                    <h2 className="text-[40px] text-brand-gold">
-                        6+
-                    </h2>
-                    <p className="text-brand-text-2">
-                        שנות נסיון במסחר
-                    </p>
-                </div>
-                <div className="flex-1 py-6 px-4">
-                    <h2 className="text-[40px] text-brand-gold">
-                        2000+
-                    </h2>
-                    <p className="text-brand-text-2">
-                        חברים בקהילה
-                    </p>
-                </div>
-                <div className="flex-1 py-6 px-4">
-                    <h2 className="text-[40px] text-brand-gold">
-                        200+
-                    </h2>
-                    <p className="text-brand-text-2">
-                        תלמידים בליווי אישי
-                    </p>
-                </div>
-                <div className="flex-1 py-6 px-4">
-                    <h2 className="text-[40px] text-brand-gold">
-                        1.5M$+
-                    </h2>    
-                    <p className="text-brand-text-2">
-                        תיקים בניהול השיטה
-                    </p>
-                </div>
-            </div>
-        </>
-    )
-}
+  return (
+    <section className="border-y border-brand-gold-dim/25 bg-brand-abyss">
+      <div className="grid grid-cols-2 gap-px bg-brand-gold-dim/25 lg:grid-cols-4">
+        {STATS.map((stat) => (
+          <div
+            key={stat.label}
+            className="bg-brand-abyss px-4 py-6 text-center"
+          >
+            <p
+              className="text-[32px] leading-none text-brand-gold md:text-[40px]"
+              dir={stat.ltr ? "ltr" : undefined}
+            >
+              {stat.value}
+            </p>
+            <p className="mt-2 text-sm text-brand-text-2 md:text-base">
+              {stat.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
