@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const PIXELS_PER_SECOND = 40;
 const PRELOAD_MARGIN_PX = 800;
-const CHECK_INTERVAL_MS = 250;
 
 export const ResultsCarousel = ({ images, altPrefix }) => {
   const trackRef = useRef(null);
@@ -17,41 +16,33 @@ export const ResultsCarousel = ({ images, altPrefix }) => {
 
   useEffect(() => {
     const imgs = Array.from(trackRef.current.querySelectorAll("img[data-idx]"));
-    const triggered = new Set();
 
-    const checkVisibility = () => {
-      const newlyVisible = [];
-      for (const img of imgs) {
-        const idx = Number(img.dataset.idx);
-        if (triggered.has(idx)) continue;
-        const rect = img.getBoundingClientRect();
-        if (
-          rect.right > -PRELOAD_MARGIN_PX &&
-          rect.left < window.innerWidth + PRELOAD_MARGIN_PX
-        ) {
-          triggered.add(idx);
-          newlyVisible.push(idx);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const newlyVisible = entries
+          .filter((entry) => entry.isIntersecting)
+          .map((entry) => Number(entry.target.dataset.idx));
+
+        if (newlyVisible.length) {
+          newlyVisible.forEach((idx) => observer.unobserve(imgs[idx]));
+          setVisibleIdx((prev) => {
+            const next = new Set(prev);
+            newlyVisible.forEach((idx) => next.add(idx));
+            return next;
+          });
         }
-      }
-      if (newlyVisible.length) {
-        setVisibleIdx((prev) => {
-          const next = new Set(prev);
-          newlyVisible.forEach((idx) => next.add(idx));
-          return next;
-        });
-      }
-      if (triggered.size === imgs.length) clearInterval(interval);
-    };
+      },
+      { rootMargin: `0px ${PRELOAD_MARGIN_PX}px` },
+    );
 
-    checkVisibility();
-    const interval = setInterval(checkVisibility, CHECK_INTERVAL_MS);
-    return () => clearInterval(interval);
+    imgs.forEach((img) => observer.observe(img));
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
       dir="ltr"
-      className="group mt-20 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
+      className="group mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
     >
       <div
         ref={trackRef}

@@ -9,11 +9,11 @@ const studentResults = Object.values(
 
 export const Results = () => {
   return (
-    <div id="results" className="py-20 bg-brand-ink overflow-hidden">
+    <section id="results" className="py-8 lg:py-12 bg-brand-ink overflow-hidden">
       <h2 className="text-[40px] text-brand-text">
         <span className="text-brand-gold">תוצאות</span> של תלמידים
       </h2>
       <ResultsCarousel images={studentResults} altPrefix="תוצאה של תלמיד" />
-    </div>
+    </section>
   );
 };

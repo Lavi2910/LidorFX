@@ -15,7 +15,7 @@ export const AboutMe = () => {
       id="about"
       className="bg-gradient-to-b from-brand-raised to-brand-ink"
     >
-      <div className="mx-auto flex max-w-[1500px] flex-col items-start gap-10 px-6 py-16 md:px-16 lg:flex-row lg:gap-24 lg:px-30 lg:py-24">
+      <div className="mx-auto flex max-w-[1500px] flex-col items-start gap-10 px-6 py-8 md:px-16 lg:flex-row lg:gap-24 lg:px-30 lg:py-12">
         <div className="mx-auto w-full max-w-[340px] lg:sticky lg:top-24 lg:mx-0 lg:w-2/5 lg:max-w-none">
           <div className="relative isolate">
             <div className="absolute inset-0 -z-10 m-auto h-full w-full rounded-full bg-brand-gold/5 blur-3xl" />

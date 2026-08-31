@@ -11,7 +11,7 @@ const NAV_ITEMS = [
 
 export const NavBar = () => {
   return (
-    <header className="flex items-center justify-between border-b border-brand-gold-dim/25 bg-brand-ink px-6 py-3 md:px-16 lg:px-30">
+    <header className="sticky top-0 z-50 flex items-center justify-between border-b border-brand-gold-dim/25 bg-brand-ink px-6 py-3 md:px-16 lg:px-30">
       <a href="#" className="h-12 w-12 shrink-0">
         <img src={logo} alt="לוגו LidorFX" className="h-full w-full object-contain" />
       </a>

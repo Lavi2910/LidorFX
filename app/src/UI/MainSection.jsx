@@ -34,6 +34,9 @@ export const MainSection = () => {
                         src={LidorProfile}
                         alt="תמונת הפרופיל של לידור מלכה"
                         className="relative w-full"
+                        width={1234}
+                        height={1126}
+                        fetchpriority="high"
                     />
                 </div>
             </div>
