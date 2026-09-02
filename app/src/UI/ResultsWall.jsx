@@ -94,7 +94,11 @@ const Lightbox = ({ item, onClose, onPrev, onNext }) => {
 };
 
 export const ResultsWall = ({
-  title = "תוצאות שלי",
+  title = (
+    <>
+      <span className="text-brand-gold">תוצאות</span> שלי
+    </>
+  ),
   subtitle,
   count = items.length,
 }) => {
@@ -107,14 +111,17 @@ export const ResultsWall = ({
           <h2 className="m-0 text-[30px] text-brand-text md:text-[40px]">
             {title}
           </h2>
-          <p className="mt-3 text-[22px] font-medium text-brand-gold md:text-[26px]">
-            {count} תוצאות ואישורי משיכה מתועדים
+          <p className="mt-3 text-[22px] font-medium text-brand-text md:text-[26px]">
+            {count} הישגים ואישורי משיכה מתועדים
           </p>
           {subtitle && (
             <p className="mx-auto mt-3 max-w-[60ch] text-brand-text-2">
               {subtitle}
             </p>
           )}
+  <p className="mt-6 text-center text-sm text-brand-muted">
+    לחיצה על תמונה מגדילה אותה
+  </p>
         </div>
 
         <div className="mt-10 grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:gap-3">
@@ -143,9 +150,6 @@ export const ResultsWall = ({
           })}
         </div>
 
-        <p className="mt-6 text-center text-sm text-brand-muted">
-          לחיצה על תמונה מגדילה אותה
-        </p>
       </div>
 
       {openIdx !== null && (

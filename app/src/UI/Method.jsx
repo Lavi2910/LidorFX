@@ -40,7 +40,7 @@ export const Method = () => {
 
         <div className="text-right">
           <h2 className="m-0 text-[34px] leading-tight text-brand-text md:text-[46px]">
-            <span className="text-brand-gold">השיטה</span>
+            <span className="text-brand-gold">השיטה</span> מבוססת על
           </h2>
           <ul className="mt-9">
             {POINTS.map((p, i) => {

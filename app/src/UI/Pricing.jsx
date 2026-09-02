@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CTAButton } from "./Components/CTAButton";
 import { LINKS } from "@/lib/links";
 
@@ -19,6 +19,14 @@ const CURRICULUM = [
   "הדרכות על חברות נוסטרו ומיסוי לסוחרים",
 ];
 
+const INVESTING_CURRICULUM = [
+  "איך השווקים הפיננסיים עובדים",
+  "איך לנתח מניות/מדדים ברמה הגבוהה ביותר",
+  "סיסטם מלא לכניסה לעסקה",
+  "התנהלות נכונה - ניהול תיק השקעות וסווינג בצורה חכמה",
+  "שיטה מלאה למציאת מניות רלוונטיות",
+];
+
 const PLANS = [
   {
     id: "training",
@@ -27,18 +35,27 @@ const PLANS = [
     launchPrice: "3,250",
     regularPrice: "3,700",
     href: LINKS.checkoutTraining,
-    cta: "לרכישת ההכשרה",
+    cta: "אני רוצה להתחיל",
     points: [
-      "110 שיעורים מפורטים, מהיסודות ועד חומר מתקדם",
-      "כל השיטה חשופה, מ-0",
-      "מתאים למי שמעדיף ללמוד לבד",
-      "בלי ליווי אישי ובלי גישה לקהילה",
+      "הכשרת מסחר מלאה: 110 שיעורים, מהיסודות ועד חומר מתקדם",
+      "קהילה סגורה לתלמידים, עם ניתוחים מוסברים",
+      "סקירת שווקים שבועית של 20-30 דקות ותוכנית לשבוע",
+      "תוכנית יומית ולייבים: מעבר על השווקים, יומני מסחר ושיעורי חידוד",
+      "ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה",
+      "כולל את קורס ההשקעות והסווינג והקהילה שלו",
+    ],
+    excludedPoints: [
+      "קהילה סגורה לתלמידים, עם ניתוחים מוסברים",
+      "סקירת שווקים שבועית של 20-30 דקות ותוכנית לשבוע",
+      "תוכנית יומית ולייבים: מעבר על השווקים, יומני מסחר ושיעורי חידוד",
+      "ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה",
+      "כולל את קורס ההשקעות והסווינג והקהילה שלו",
     ],
     curriculum: CURRICULUM,
+    curriculumGapClass: "lg:mt-8",
   },
   {
     id: "flagship",
-    badge: "הכי מקיף",
     featured: true,
     name: "תוכנית הדגל",
     tagline: "ההכשרה המלאה, ליווי אישי מלידור וקהילת התלמידים.",
@@ -47,11 +64,11 @@ const PLANS = [
     href: LINKS.checkoutFlagship,
     cta: "אני רוצה להתחיל",
     points: [
-      "ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה",
       "הכשרת מסחר מלאה: 110 שיעורים, מהיסודות ועד חומר מתקדם",
-      "קהילה סגורה לתלמידים, עם ניתוחים מוסברים בכל יום מסחר",
+      "קהילה סגורה לתלמידים, עם ניתוחים מוסברים",
       "סקירת שווקים שבועית של 20-30 דקות ותוכנית לשבוע",
       "תוכנית יומית ולייבים: מעבר על השווקים, יומני מסחר ושיעורי חידוד",
+      "ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה",
       "כולל את קורס ההשקעות והסווינג והקהילה שלו",
     ],
     curriculum: CURRICULUM,
@@ -63,13 +80,17 @@ const PLANS = [
     launchPrice: "999",
     regularPrice: "1,500",
     href: LINKS.checkoutInvesting,
-    cta: "לרכישת הקורס",
+    cta: "אני רוצה להתחיל",
     points: [
-      "30 שיעורים מפורטים: איך משקיעים נכון, מ-0",
+      "שיעורים מפורטים: איך משקיעים נכון",
       "מודל הכניסה שלי להשקעות ולמסחר סווינג",
       "קהילה סגורה עם רעיונות ההשקעה והסווינג שלי",
-      "מענה לשאלות בקבוצה - ללא ליווי אישי",
+      "מענה לשאלות בקבוצה",
+      "ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה",
     ],
+    excludedPoints: ["ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה"],
+    curriculum: INVESTING_CURRICULUM,
+    curriculumGapClass: "lg:mt-24",
   },
 ];
 
@@ -92,10 +113,41 @@ const Check = ({ dim }) => (
 
 export const Pricing = () => {
   const [now, setNow] = useState(() => Date.now());
+  const cardRefs = useRef([]);
+  const [cardMinHeight, setCardMinHeight] = useState(0);
 
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 60000);
     return () => clearInterval(id);
+  }, []);
+
+  useLayoutEffect(() => {
+    const isDesktopGrid = () => window.matchMedia("(min-width: 1024px)").matches;
+
+    const measure = () => {
+      if (!isDesktopGrid()) {
+        setCardMinHeight(0);
+        return;
+      }
+      const heights = cardRefs.current.map((el) => el?.offsetHeight || 0);
+      setCardMinHeight(Math.max(0, ...heights));
+    };
+
+    setCardMinHeight(0);
+    let cancelled = false;
+    const raf1 = requestAnimationFrame(() => {
+      measure();
+      const fontsReady = document.fonts?.ready ?? Promise.resolve();
+      fontsReady.then(() => {
+        if (!cancelled) requestAnimationFrame(measure);
+      });
+    });
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf1);
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   const isLaunch = now < LAUNCH_END;
@@ -103,7 +155,7 @@ export const Pricing = () => {
   return (
     <section
       id="pricing"
-      className="relative overflow-hidden bg-brand-ink py-8 lg:py-12"
+      className="relative overflow-hidden bg-brand-ink py-6 lg:py-8"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_50%_38%,rgba(244,184,66,0.055),transparent_72%)]" />
 
@@ -120,13 +172,15 @@ export const Pricing = () => {
           )}
         </div>
 
-        <div className="mt-12 grid items-start gap-6 lg:grid-cols-3">
-          {PLANS.map((plan) => (
+        <div className="mt-8 grid items-start gap-5 lg:grid-cols-3">
+          {PLANS.map((plan, i) => (
             <div
               key={plan.id}
-              className={`relative flex h-full flex-col rounded-2xl border p-6 text-right md:p-8 ${
+              ref={(el) => (cardRefs.current[i] = el)}
+              style={cardMinHeight ? { minHeight: cardMinHeight } : undefined}
+              className={`relative flex flex-col rounded-2xl border p-5 text-right md:p-6 ${
                 plan.featured
-                  ? "border-brand-gold-dim bg-brand-surface shadow-[0_0_60px_-20px_rgba(255,201,77,0.35)] lg:-mt-4 lg:pb-10"
+                  ? "border-brand-gold-dim bg-brand-surface shadow-[0_0_60px_-20px_rgba(255,201,77,0.35)] lg:-mt-4 lg:pb-8"
                   : "border-brand-line bg-brand-surface/40"
               }`}
             >
@@ -136,17 +190,17 @@ export const Pricing = () => {
                 </span>
               )}
 
-              <h3 className="m-0 text-[24px] font-semibold text-brand-text">
+              <h3 className="m-0 text-[20px] font-semibold text-brand-text">
                 {plan.name}
               </h3>
-              <p className="mt-2 min-h-[3rem] text-[15px] leading-relaxed text-brand-text-2">
+              <p className="mt-1.5 text-[14px] leading-snug text-brand-text-2">
                 {plan.tagline}
               </p>
 
-              <div className="mt-5 border-y border-brand-line py-5">
+              <div className="mt-3 border-y border-brand-line py-3">
                 <div className="flex items-baseline justify-start gap-3">
                   <span
-                    className="text-[40px] font-bold leading-none text-brand-text"
+                    className="text-[32px] font-bold leading-none text-brand-text"
                     dir="ltr"
                   >
                     ₪{isLaunch ? plan.launchPrice : plan.regularPrice}
@@ -158,19 +212,22 @@ export const Pricing = () => {
                   )}
                 </div>
                 {isLaunch && (
-                  <p className="mt-2 text-xs text-brand-gold">
+                  <p className="mt-1.5 text-xs text-brand-gold">
                     מחיר השקה - זמין עד {LAUNCH_END_LABEL}
                   </p>
                 )}
               </div>
 
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-3 space-y-2">
                 {plan.points.map((point) => {
-                  const dim = point.startsWith("בלי") || point.includes("ללא ליווי");
+                  const dim =
+                    point.startsWith("בלי") ||
+                    point.includes("ללא ליווי") ||
+                    plan.excludedPoints?.includes(point);
                   return (
                     <li
                       key={point}
-                      className={`flex gap-2.5 text-[15px] leading-relaxed ${
+                      className={`flex gap-2 text-[13.5px] leading-snug ${
                         dim ? "text-brand-muted" : "text-brand-text-2"
                       }`}
                     >
@@ -182,18 +239,20 @@ export const Pricing = () => {
               </ul>
 
               {plan.curriculum && (
-                <details className="group mt-5 border-t border-brand-line pt-4">
-                  <summary className="cursor-pointer list-none text-[15px] font-medium text-brand-gold-dim transition-colors hover:text-brand-gold">
-                    מה נלמד בהכשרה
-                    <span className="inline-block ps-2 transition-transform group-open:rotate-90">
+                <details
+                  className={`group mt-3 border-t border-brand-line pt-3 ${plan.curriculumGapClass || ""}`}
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between text-[14px] font-medium text-brand-gold-dim transition-colors hover:text-brand-gold">
+                    <span>מה נלמד בהכשרה</span>
+                    <span className="inline-block transition-transform group-open:rotate-90">
                       ‹
                     </span>
                   </summary>
-                  <ul className="mt-4 space-y-2.5">
+                  <ul className="mt-3 space-y-2">
                     {plan.curriculum.map((line) => (
                       <li
                         key={line}
-                        className="flex gap-2.5 text-[14px] leading-relaxed text-brand-text-2"
+                        className="flex gap-2 text-[13px] leading-snug text-brand-text-2"
                       >
                         <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-gold-dim" />
                         <span>{line}</span>
@@ -203,12 +262,12 @@ export const Pricing = () => {
                 </details>
               )}
 
-              <div className="mt-8 pt-2">
+              <div className="mt-auto pt-4">
                 <CTAButton
                   href={plan.href}
                   external
                   size="sm"
-                  variant={plan.featured ? "primary" : "secondary"}
+                  variant="primary"
                   className="w-full"
                 >
                   {plan.cta}
@@ -218,9 +277,8 @@ export const Pricing = () => {
           ))}
         </div>
 
-        <p className="mx-auto mt-10 max-w-[70ch] text-center text-xs leading-relaxed text-brand-muted">
-          התוכן הוא חינוכי בלבד ואינו מהווה ייעוץ השקעות. מסחר כרוך בסיכון להפסד
-          ההון. תוצאות עבר אינן מעידות על תוצאות עתידיות.
+        <p className="mx-auto mt-6 max-w-[70ch] text-center text-xs leading-relaxed text-red-500">
+          לבדוק עם לידור אם צריך דיסקליימר כאן
         </p>
       </div>
     </section>

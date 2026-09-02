@@ -64,7 +64,7 @@ export const AboutMe = () => {
               הגרף. עשיתי בקטסטים, חקרתי את תנועת המחיר ולמדתי מהגרף עצמו איך
               השוק באמת זז. עם הזמן התחלתי לבנות ולחבר קונספטים ומודלים משלי.
               בדקתי אותם שוב ושוב, שיפרתי, דייקתי ותרגלתי, עד שבניתי שיטת מסחר
-              סיסטמטית שהוכיחה את עצמה לאורך זמן.
+              ברורה שהוכיחה את עצמה לאורך זמן.
             </p>
             <p>
               היום אני סוחר במשרה מלאה, מנהל תיקי מסחר בפרייס אקשן טהור, ומלווה
@@ -76,14 +76,9 @@ export const AboutMe = () => {
           <blockquote className="my-8 max-w-[62ch] border-s-2 border-brand-gold-dim ps-5">
             <p className="text-[20px] font-medium leading-snug text-brand-text md:text-[24px]">
               אני לא מבטיח רווחים. אני מבטיח שיטה ברורה, ליווי אישי, ותשובה ממני
-              כשקשה.
+              תמיד.
             </p>
           </blockquote>
-
-          <p className="max-w-[62ch] leading-relaxed text-brand-text-2">
-            אני מלווה בעיקר סוחרים שכבר עברו קורסים והכשרות בעבר, אבל עדיין לא
-            הגיעו לרווחיות בצורה עקבית.
-          </p>
 
           <div className="mt-10 flex flex-col items-start gap-5">
             <CTAButton href={LINKS.pricing}>אני רוצה להתחיל</CTAButton>
