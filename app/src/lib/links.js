@@ -16,3 +16,12 @@ export const LINKS = {
   youtube: "https://youtube.com/@lidorfx?si=efeXvVfL0lQF4TBZ",
   whatsappCommunity: "https://chat.whatsapp.com/GnlGi6nSfjC0nM9FwsAaOu?mode=gi_t",
 };
+
+export const NAV_ITEMS = [
+  { label: "מי אני", href: LINKS.about },
+  { label: "בשבילך", href: LINKS.forWho },
+  { label: "השיטה", href: LINKS.method },
+  { label: "תוצאות", href: LINKS.lidorResults },
+  { label: "המלצות", href: LINKS.testimonials },
+  { label: "שאלות נפוצות", href: LINKS.faq },
+];

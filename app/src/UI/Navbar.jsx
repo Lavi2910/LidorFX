@@ -1,15 +1,6 @@
 import { CTAButton } from "./Components/CTAButton";
-import { LINKS } from "@/lib/links";
+import { LINKS, NAV_ITEMS } from "@/lib/links";
 import logo from "../assets/Logo.png";
-
-export const NAV_ITEMS = [
-  { label: "מי אני", href: LINKS.about },
-  { label: "בשבילך", href: LINKS.forWho },
-  { label: "השיטה", href: LINKS.method },
-  { label: "תוצאות", href: LINKS.lidorResults },
-  { label: "המלצות", href: LINKS.testimonials },
-  { label: "שאלות נפוצות", href: LINKS.faq },
-];
 
 export const NavBar = () => {
   return (
