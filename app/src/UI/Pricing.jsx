@@ -57,6 +57,7 @@ const PLANS = [
   {
     id: "flagship",
     featured: true,
+    badge: "הכי מקיף",
     name: "תוכנית הדגל",
     tagline: "ההכשרה המלאה, ליווי אישי מלידור וקהילת התלמידים.",
     launchPrice: "6,000",
@@ -98,16 +99,27 @@ const Check = ({ dim }) => (
   <svg
     viewBox="0 0 20 20"
     aria-hidden="true"
-    className={`mt-1 h-4 w-4 shrink-0 ${dim ? "text-brand-muted" : "text-brand-gold"}`}
+    className={`h-4 w-4 shrink-0 ${dim ? "mt-0.5 text-brand-muted" : "text-brand-gold"}`}
   >
-    <path
-      d="M4 10.5l4 4 8-9"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    {dim ? (
+      <path
+        d="M5 5l10 10M15 5L5 15"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ) : (
+      <path
+        d="M4 10.5l4 4 8-9"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    )}
   </svg>
 );
 
@@ -227,7 +239,7 @@ export const Pricing = () => {
                   return (
                     <li
                       key={point}
-                      className={`flex gap-2 text-[13.5px] leading-snug ${
+                      className={`flex items-start gap-2 text-[13.5px] leading-snug ${
                         dim ? "text-brand-muted" : "text-brand-text-2"
                       }`}
                     >
@@ -262,7 +274,7 @@ export const Pricing = () => {
                 </details>
               )}
 
-              <div className="mt-auto pt-4">
+              <div className="mt-auto space-y-2 pt-4">
                 <CTAButton
                   href={plan.href}
                   external
@@ -272,14 +284,15 @@ export const Pricing = () => {
                 >
                   {plan.cta}
                 </CTAButton>
+                {plan.id === "flagship" && (
+                  <CTAButton href="#" size="sm" variant="secondary" className="w-full">
+                    לדבר עם לידור
+                  </CTAButton>
+                )}
               </div>
             </div>
           ))}
         </div>
-
-        <p className="mx-auto mt-6 max-w-[70ch] text-center text-xs leading-relaxed text-red-500">
-          לבדוק עם לידור אם צריך דיסקליימר כאן
-        </p>
       </div>
     </section>
   );

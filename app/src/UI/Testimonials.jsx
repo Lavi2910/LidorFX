@@ -99,7 +99,6 @@ export const Testimonials = () => {
           <h2 className="m-0 text-[30px] text-brand-text md:text-[42px]">
             <span className="text-brand-gold">תלמידים</span> מספרים
           </h2>
-          <p className="m-0 mt-2 text-sm text-red-500">לבדוק עם לידור ציטוטים</p>
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-3">

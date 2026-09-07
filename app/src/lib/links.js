@@ -19,7 +19,7 @@ export const LINKS = {
 
 export const NAV_ITEMS = [
   { label: "מי אני", href: LINKS.about },
-  { label: "בשבילך", href: LINKS.forWho },
+  { label: "למי זה מתאים", href: LINKS.forWho },
   { label: "השיטה", href: LINKS.method },
   { label: "תוצאות", href: LINKS.lidorResults },
   { label: "המלצות", href: LINKS.testimonials },
