@@ -184,7 +184,7 @@ export const Pricing = () => {
           )}
         </div>
 
-        <div className="mt-8 grid items-start gap-5 lg:grid-cols-3">
+        <div className="mt-8 grid items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
           {PLANS.map((plan, i) => (
             <div
               key={plan.id}
@@ -192,7 +192,7 @@ export const Pricing = () => {
               style={cardMinHeight ? { minHeight: cardMinHeight } : undefined}
               className={`relative flex flex-col rounded-2xl border p-5 text-right md:p-6 ${
                 plan.featured
-                  ? "border-brand-gold-dim bg-brand-surface shadow-[0_0_60px_-20px_rgba(255,201,77,0.35)] lg:-mt-4 lg:pb-8"
+                  ? "order-first border-brand-gold-dim bg-brand-surface shadow-[0_0_60px_-20px_rgba(255,201,77,0.35)] md:order-none lg:-mt-4 lg:pb-8"
                   : "border-brand-line bg-brand-surface/40"
               }`}
             >

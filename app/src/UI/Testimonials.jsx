@@ -101,7 +101,7 @@ export const Testimonials = () => {
           </h2>
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {FEATURED.map((v) => (
             <figure key={v.id} className="m-0">
               <div className="relative aspect-video overflow-hidden rounded-xl border border-brand-line bg-brand-surface">

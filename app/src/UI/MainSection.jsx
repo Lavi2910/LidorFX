@@ -31,7 +31,7 @@ export const MainSection = () => {
                     <SocialLinks className="mt-7" />
                 </div>
 
-                <div className="relative isolate mx-auto w-full max-w-[320px] lg:mx-0 lg:w-2/5 lg:max-w-none">
+                <div className="relative isolate mx-auto hidden w-full max-w-[320px] md:block lg:mx-0 lg:w-2/5 lg:max-w-none">
                     <div className="absolute inset-0 -z-10 m-auto h-full w-full rounded-full bg-brand-gold/5 blur-3xl" />
                     <img
                         src={LidorProfile}

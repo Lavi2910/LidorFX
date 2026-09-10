@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
 const thumbMap = import.meta.glob(
   "../assets/LidorResultsThumbs/*.{jpg,jpeg,JPG,JPEG,png,PNG}",
@@ -38,21 +41,50 @@ const items = Object.entries(thumbMap)
     return a.name.localeCompare(b.name);
   });
 
+const INITIAL_COUNT = 24;
+
 const Lightbox = ({ item, onClose, onPrev, onNext }) => {
   const [fullSrc, setFullSrc] = useState(null);
+  const dialogRef = useRef(null);
+  const closeBtnRef = useRef(null);
+
+  useEffect(() => {
+    const previouslyFocused = document.activeElement;
+    closeBtnRef.current?.focus();
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+      previouslyFocused?.focus?.();
+    };
+  }, []);
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
       if (e.key === "ArrowRight") onPrev();
       if (e.key === "ArrowLeft") onNext();
+
+      if (e.key === "Tab") {
+        const focusable = Array.from(
+          dialogRef.current?.querySelectorAll(FOCUSABLE_SELECTOR) ?? [],
+        );
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [onClose, onPrev, onNext]);
 
   useEffect(() => {
@@ -70,6 +102,7 @@ const Lightbox = ({ item, onClose, onPrev, onNext }) => {
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label="תוצאה מוגדלת"
@@ -77,9 +110,10 @@ const Lightbox = ({ item, onClose, onPrev, onNext }) => {
       onClick={onClose}
     >
       <button
+        ref={closeBtnRef}
         onClick={onClose}
         aria-label="סגירה"
-        className="absolute top-5 left-5 text-3xl leading-none text-brand-text-2 hover:text-brand-gold"
+        className="absolute top-5 left-5 text-3xl leading-none text-brand-text-2 hover:text-brand-gold focus-visible:outline-2 focus-visible:outline-brand-gold"
       >
         ×
       </button>
@@ -103,6 +137,8 @@ export const ResultsWall = ({
   count = items.length,
 }) => {
   const [openIdx, setOpenIdx] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+  const visibleItems = showAll ? items : items.slice(0, INITIAL_COUNT);
 
   return (
     <section id="lidor-results" className="bg-brand-ink py-8 lg:py-12">
@@ -125,14 +161,14 @@ export const ResultsWall = ({
         </div>
 
         <div className="mt-10 grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 lg:gap-3">
-          {items.map((item, i) => {
+          {visibleItems.map((item, i) => {
             const isFeatured = FEATURED.includes(item.name);
             return (
               <button
                 key={item.name}
                 onClick={() => setOpenIdx(i)}
                 className={`group relative overflow-hidden rounded-md border border-brand-line/60 bg-brand-surface transition-all hover:z-10 hover:border-brand-gold-dim focus:outline-none focus-visible:border-brand-gold ${
-                  isFeatured ? "col-span-2 row-span-2" : ""
+                  isFeatured ? "sm:col-span-2 sm:row-span-2" : ""
                 }`}
               >
                 <img
@@ -150,6 +186,17 @@ export const ResultsWall = ({
           })}
         </div>
 
+        {!showAll && items.length > INITIAL_COUNT && (
+          <div className="mt-8 text-center">
+            <button
+              type="button"
+              onClick={() => setShowAll(true)}
+              className="rounded-md border border-brand-text-2 px-6 py-2.5 text-[15px] font-medium text-brand-text-2 transition-colors hover:border-brand-gold hover:text-brand-gold"
+            >
+              הצג עוד
+            </button>
+          </div>
+        )}
       </div>
 
       {openIdx !== null && (
