@@ -44,16 +44,18 @@ const items = Object.entries(thumbMap)
 const INITIAL_COUNT = 24;
 
 const Lightbox = ({ item, onClose, onPrev, onNext }) => {
-  const [fullSrc, setFullSrc] = useState(null);
+  const [loaded, setLoaded] = useState(null);
+  const fullSrc = loaded?.name === item?.name ? loaded.src : null;
   const dialogRef = useRef(null);
   const closeBtnRef = useRef(null);
 
   useEffect(() => {
     const previouslyFocused = document.activeElement;
     closeBtnRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
       previouslyFocused?.focus?.();
     };
   }, []);
@@ -88,11 +90,10 @@ const Lightbox = ({ item, onClose, onPrev, onNext }) => {
   }, [onClose, onPrev, onNext]);
 
   useEffect(() => {
-    setFullSrc(null);
     let cancelled = false;
     item?.loadFull?.().then((src) => {
-      if (!cancelled) setFullSrc(src);
-    });
+      if (!cancelled) setLoaded({ name: item.name, src });
+    }).catch(() => { /* Keep the thumbnail if the full image cannot load. */ });
     return () => {
       cancelled = true;
     };
@@ -117,6 +118,8 @@ const Lightbox = ({ item, onClose, onPrev, onNext }) => {
       >
         ×
       </button>
+      <button type="button" onClick={(e) => { e.stopPropagation(); onPrev(); }} aria-label="התמונה הקודמת" className="absolute right-3 top-1/2 z-10 h-12 w-12 rounded-full bg-brand-ink text-3xl text-brand-gold">→</button>
+      <button type="button" onClick={(e) => { e.stopPropagation(); onNext(); }} aria-label="התמונה הבאה" className="absolute left-3 top-1/2 z-10 h-12 w-12 rounded-full bg-brand-ink text-3xl text-brand-gold">←</button>
       <img
         src={fullSrc ?? item.thumb}
         alt="תוצאה של לידור"
@@ -166,6 +169,8 @@ export const ResultsWall = ({
             return (
               <button
                 key={item.name}
+                type="button"
+                aria-label={`הגדלת תוצאה ${i + 1} של לידור`}
                 onClick={() => setOpenIdx(i)}
                 className={`group relative overflow-hidden rounded-md border border-brand-line/60 bg-brand-surface transition-all hover:z-10 hover:border-brand-gold-dim focus:outline-none focus-visible:border-brand-gold ${
                   isFeatured ? "sm:col-span-2 sm:row-span-2" : ""

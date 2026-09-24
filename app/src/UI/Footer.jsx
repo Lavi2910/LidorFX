@@ -1,5 +1,14 @@
 import { SocialLinks } from "./Components/SocialLinks";
-import logo from "../assets/Logo.png";
+import logo from "../assets/optimized/Logo.webp";
+
+const BASE = import.meta.env.BASE_URL;
+
+const LEGAL_DOCS = [
+  { label: "תקנון ותנאי שימוש", href: `${BASE}legal/terms.html` },
+  { label: "מדיניות פרטיות", href: `${BASE}legal/privacy.html` },
+  { label: "מדיניות ביטולים והחזרים", href: `${BASE}legal/terms.html#מדיניות-ביטול` },
+  { label: "הצהרת נגישות", href: `${BASE}legal/accessibility.html` },
+];
 
 export const Footer = () => {
   return (
@@ -17,9 +26,19 @@ export const Footer = () => {
           <SocialLinks />
         </div>
 
-        <p className="m-0 mt-8 text-center text-xs text-red-500 lg:text-right">
-          להוסיף מסמכים
-        </p>
+        <nav aria-label="מסמכי האתר" className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-t border-brand-line pt-6 lg:justify-start">
+          {LEGAL_DOCS.map((doc) => (
+            <a
+              key={doc.label}
+              href={doc.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-brand-muted transition-colors hover:text-brand-gold"
+            >
+              {doc.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </footer>
   );

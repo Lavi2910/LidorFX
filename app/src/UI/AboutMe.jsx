@@ -1,4 +1,4 @@
-import LidorPic2 from "../assets/Lidor-Pic-2.png";
+import LidorPic2 from "../assets/optimized/Lidor-Pic-2.webp";
 import { CTAButton } from "./Components/CTAButton";
 import { LINKS } from "@/lib/links";
 
@@ -24,6 +24,9 @@ export const AboutMe = () => {
               alt="לידור מלכה"
               className="relative w-full"
               loading="lazy"
+              width="720"
+              height="576"
+              style={{ height: "auto" }}
             />
           </div>
 

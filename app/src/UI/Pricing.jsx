@@ -1,13 +1,14 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CTAButton } from "./Components/CTAButton";
 import { LINKS } from "@/lib/links";
 
 // TODO: update the date the sale ends
-const SALE_END_DATE = "2026-09-14T09:00:00+03:00";
+const SALE_END_DATE = "2026-09-29T09:00:00+03:00";
 const LAUNCH_END = new Date(SALE_END_DATE).getTime();
 const LAUNCH_END_LABEL = new Date(LAUNCH_END).toLocaleDateString("he-IL", {
   day: "numeric",
   month: "long",
+  timeZone: "Asia/Jerusalem",
 });
 
 const CURRICULUM = [
@@ -32,8 +33,8 @@ const PLANS = [
     id: "training",
     name: "הכשרת המסחר המקיפה",
     tagline: "כל החומר, בקצב שלך. בלי ליווי ובלי קהילה.",
-    launchPrice: "3,250",
-    regularPrice: "3,700",
+    launchPrice: "3,350",
+    regularPrice: "4,000",
     href: LINKS.checkoutTraining,
     cta: "אני רוצה להתחיל",
     points: [
@@ -61,7 +62,7 @@ const PLANS = [
     name: "תוכנית הדגל",
     tagline: "ההכשרה המלאה, ליווי אישי מלידור וקהילת התלמידים.",
     launchPrice: "6,000",
-    regularPrice: "6,500",
+    regularPrice: "7,000",
     href: LINKS.checkoutFlagship,
     cta: "אני רוצה להתחיל",
     points: [
@@ -124,45 +125,16 @@ const Check = ({ dim }) => (
 );
 
 export const Pricing = () => {
-  const [now, setNow] = useState(() => Date.now());
-  const cardRefs = useRef([]);
-  const [cardMinHeight, setCardMinHeight] = useState(0);
+  const [now, setNow] = useState(null);
 
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 60000);
-    return () => clearInterval(id);
+    const update = () => setNow(Date.now());
+    const first = setTimeout(update, 0);
+    const id = setInterval(update, 60000);
+    return () => { clearTimeout(first); clearInterval(id); };
   }, []);
 
-  useLayoutEffect(() => {
-    const isDesktopGrid = () => window.matchMedia("(min-width: 1024px)").matches;
-
-    const measure = () => {
-      if (!isDesktopGrid()) {
-        setCardMinHeight(0);
-        return;
-      }
-      const heights = cardRefs.current.map((el) => el?.offsetHeight || 0);
-      setCardMinHeight(Math.max(0, ...heights));
-    };
-
-    setCardMinHeight(0);
-    let cancelled = false;
-    const raf1 = requestAnimationFrame(() => {
-      measure();
-      const fontsReady = document.fonts?.ready ?? Promise.resolve();
-      fontsReady.then(() => {
-        if (!cancelled) requestAnimationFrame(measure);
-      });
-    });
-    window.addEventListener("resize", measure);
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf1);
-      window.removeEventListener("resize", measure);
-    };
-  }, []);
-
-  const isLaunch = now < LAUNCH_END;
+  const isLaunch = now !== null && now < LAUNCH_END;
 
   return (
     <section
@@ -184,13 +156,11 @@ export const Pricing = () => {
           )}
         </div>
 
-        <div className="mt-8 grid items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {PLANS.map((plan, i) => (
+        <div className="mt-8 grid items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {PLANS.map((plan) => (
             <div
               key={plan.id}
-              ref={(el) => (cardRefs.current[i] = el)}
-              style={cardMinHeight ? { minHeight: cardMinHeight } : undefined}
-              className={`relative flex flex-col rounded-2xl border p-5 text-right md:p-6 ${
+              className={`relative flex min-w-0 flex-col rounded-2xl border p-5 text-right md:p-6 ${
                 plan.featured
                   ? "order-first border-brand-gold-dim bg-brand-surface shadow-[0_0_60px_-20px_rgba(255,201,77,0.35)] md:order-none lg:-mt-4 lg:pb-8"
                   : "border-brand-line bg-brand-surface/40"
@@ -210,7 +180,7 @@ export const Pricing = () => {
               </p>
 
               <div className="mt-3 border-y border-brand-line py-3">
-                <div className="flex items-baseline justify-start gap-3">
+                <div className="flex flex-wrap items-baseline justify-start gap-3">
                   <span
                     className="text-[32px] font-bold leading-none text-brand-text"
                     dir="ltr"
@@ -244,7 +214,7 @@ export const Pricing = () => {
                       }`}
                     >
                       <Check dim={dim} />
-                      <span>{point}</span>
+                      <span>{dim && <span className="sr-only">לא כלול: </span>}{point}</span>
                     </li>
                   );
                 })}
@@ -285,7 +255,13 @@ export const Pricing = () => {
                   {plan.cta}
                 </CTAButton>
                 {plan.id === "flagship" && (
-                  <CTAButton href="#" size="sm" variant="secondary" className="w-full">
+                  <CTAButton
+                    href={LINKS.talkToLidor}
+                    external
+                    size="sm"
+                    variant="secondary"
+                    className="w-full"
+                  >
                     לדבר עם לידור
                   </CTAButton>
                 )}

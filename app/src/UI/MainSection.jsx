@@ -1,4 +1,4 @@
-import LidorProfile from "../assets/Lidor-Pic-1.png"
+import LidorProfile from "../assets/optimized/Lidor-Pic-1.webp"
 import { CTAButton } from "./Components/CTAButton"
 import { SocialLinks } from "./Components/SocialLinks"
 import { LINKS } from "@/lib/links"

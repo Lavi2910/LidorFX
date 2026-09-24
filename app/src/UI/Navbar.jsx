@@ -1,6 +1,6 @@
 import { CTAButton } from "./Components/CTAButton";
 import { LINKS, NAV_ITEMS } from "@/lib/links";
-import logo from "../assets/Logo.png";
+import logo from "../assets/optimized/Logo.webp";
 
 export const NavBar = () => {
   return (
@@ -8,7 +8,7 @@ export const NavBar = () => {
       dir="rtl"
       className="sticky top-0 z-50 flex items-center justify-between border-b border-brand-gold-dim/25 bg-brand-ink px-6 py-3 md:px-16 lg:px-30"
     >
-      <nav className="flex items-center gap-2 md:gap-5">
+      <nav aria-label="ניווט ראשי" className="flex items-center gap-2 md:gap-5">
         <CTAButton href={LINKS.pricing} size="sm">
           להתחיל עכשיו
         </CTAButton>

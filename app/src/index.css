@@ -1,9 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
-@import "@fontsource-variable/noto-sans-hebrew";
-@import "@fontsource-variable/rubik";
+@import "./fonts.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -283,3 +281,105 @@ code {
     background-attachment: fixed;}
   html {
     @apply font-sans;}}
+@layer base {
+  :where(a, button, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-brand-gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .skip-link {
+    position: absolute;
+    inset-inline-start: 1rem;
+    top: -100px;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.375rem;
+    background: var(--color-brand-gold);
+    color: var(--color-brand-ink);
+    font-weight: 700;
+    transition: top 0.15s ease;
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Accessibility menu overrides (see AccessibilityMenu.jsx).
+ * !important is used deliberately here: these need to reliably beat
+ * Tailwind's per-element utility classes (arbitrary text-[Npx],
+ * leading-*, tracking-* etc. are used throughout the site), which an
+ * unqualified @layer base rule would otherwise lose to.
+ */
+@layer base {
+  html[data-a11y-text-size="110"] {
+    --a11y-scale: 1.1;
+    zoom: 1.1 !important;
+  }
+  html[data-a11y-text-size="125"] {
+    --a11y-scale: 1.25;
+    zoom: 1.25 !important;
+  }
+  html[data-a11y-text-size="150"] {
+    --a11y-scale: 1.5;
+    zoom: 1.5 !important;
+  }
+
+  html[data-a11y-contrast="true"] {
+    --color-brand-muted: #d5d8e0;
+    --color-brand-text-2: #f2f4f8;
+    --color-brand-text: #ffffff;
+    --color-brand-line: #727888;
+  }
+
+  html[data-a11y-spacing="true"] body,
+  html[data-a11y-spacing="true"] body * {
+    line-height: 1.85 !important;
+    letter-spacing: 0.06em !important;
+    word-spacing: 0.14em !important;
+  }
+
+  html[data-a11y-underline-links="true"] a {
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+    background-color: rgb(255 201 77 / 20%) !important;
+  }
+
+  html[data-a11y-readable-font="true"] body,
+  html[data-a11y-readable-font="true"] body * {
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Arial,
+      "Noto Sans Hebrew",
+      sans-serif !important;
+  }
+
+  html[data-a11y-stop-animations="true"] *,
+  html[data-a11y-stop-animations="true"] *::before,
+  html[data-a11y-stop-animations="true"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Viewport units are not reduced by CSS zoom; keep the control panel reachable. */
+#a11y-panel {
+  width: min(24rem, calc(100vw / var(--a11y-scale, 1) - 2.5rem));
+  max-height: calc((100dvh - 180px) / var(--a11y-scale, 1));
+}

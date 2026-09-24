@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const BASE =
-  "font-[family-name:var(--heading)] font-medium tracking-[-0.24px] leading-none rounded-sm h-auto text-center transition-colors";
+  "font-[family-name:var(--heading)] font-medium tracking-[-0.24px] leading-none rounded-sm h-auto max-w-full whitespace-normal text-center transition-colors";
 
 const SIZES = {
   sm: "px-5 py-2.5 text-[17px]",

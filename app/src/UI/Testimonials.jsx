@@ -72,12 +72,13 @@ const VideoFacade = ({ id, big, label }) => {
       type="button"
       onClick={() => setPlaying(true)}
       aria-label={`נגן ${label || "סרטון"}`}
-      className="group absolute inset-0 h-full w-full"
+      className="group absolute inset-0 h-full w-full focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-[3px] focus-visible:outline-brand-gold"
     >
       <img
         src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
         onError={(e) => {
-          e.currentTarget.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+          const fallback = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+          if (e.currentTarget.src !== fallback) e.currentTarget.src = fallback;
         }}
         alt=""
         loading="lazy"
