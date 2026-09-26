@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { CTAButton } from "./Components/CTAButton";
+import { VideoFacade } from "./Components/VideoFacade";
 import { LINKS } from "@/lib/links";
 
-// TODO: update the date the sale ends
-const SALE_END_DATE = "2026-09-29T09:00:00+03:00";
+const SALE_START_DATE = "2026-09-28T00:00:00+03:00";
+const SALE_END_DATE = "2026-10-08T23:59:59+03:00";
+const LAUNCH_START = new Date(SALE_START_DATE).getTime();
 const LAUNCH_END = new Date(SALE_END_DATE).getTime();
 const LAUNCH_END_LABEL = new Date(LAUNCH_END).toLocaleDateString("he-IL", {
   day: "numeric",
@@ -43,14 +45,14 @@ const PLANS = [
       "סקירת שווקים שבועית של 20-30 דקות ותוכנית לשבוע",
       "תוכנית יומית ולייבים: מעבר על השווקים, יומני מסחר ושיעורי חידוד",
       "ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה",
-      "כולל את קורס ההשקעות והסווינג והקהילה שלו",
+      "לא כולל את קורס ההשקעות והסווינג והקהילה שלו",
     ],
     excludedPoints: [
       "קהילה סגורה לתלמידים, עם ניתוחים מוסברים",
       "סקירת שווקים שבועית של 20-30 דקות ותוכנית לשבוע",
       "תוכנית יומית ולייבים: מעבר על השווקים, יומני מסחר ושיעורי חידוד",
       "ליווי אישי מלידור, בלי הגבלת זמן - כל שאלה, כל בעיה",
-      "כולל את קורס ההשקעות והסווינג והקהילה שלו",
+      "לא כולל את קורס ההשקעות והסווינג והקהילה שלו",
     ],
     curriculum: CURRICULUM,
     curriculumGapClass: "lg:mt-8",
@@ -134,7 +136,7 @@ export const Pricing = () => {
     return () => { clearTimeout(first); clearInterval(id); };
   }, []);
 
-  const isLaunch = now !== null && now < LAUNCH_END;
+  const isLaunch = now !== null && now >= LAUNCH_START && now < LAUNCH_END;
 
   return (
     <section
@@ -268,6 +270,15 @@ export const Pricing = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mx-auto mt-16 max-w-[720px] border-t border-brand-line pt-10">
+          <h3 className="m-0 text-center text-[22px] font-semibold text-brand-text">
+            סילבוס של תוכנית ההכשרה הדיגיטלית
+          </h3>
+          <div className="relative mt-6 aspect-video overflow-hidden rounded-xl border border-brand-line bg-brand-surface">
+            <VideoFacade id="IYzsRq9vk0A" big label="סילבוס של תוכנית ההכשרה הדיגיטלית" />
+          </div>
         </div>
       </div>
     </section>

@@ -33,10 +33,7 @@ export const Method = () => {
 
       <div className="relative z-10 mx-auto mt-9 grid max-w-[1360px] items-stretch gap-12 px-6 md:px-16 lg:grid-cols-[1fr_1.3fr] lg:gap-14 lg:px-8">
         <figure className="relative m-0 w-full">
-          <div className="pointer-events-none absolute -inset-3 -z-10 rounded-[26px] bg-brand-gold/10 blur-2xl" />
-          <div className="h-full min-h-[320px] overflow-hidden rounded-xl bg-white p-1.5 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.75)] ring-1 ring-brand-gold-dim/40">
-            <MethodGallery />
-          </div>
+          <MethodGallery />
         </figure>
 
         <div className="text-right">
