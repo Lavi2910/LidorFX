@@ -16,6 +16,11 @@ const FEATURED = [
     name: "אלון",
     caption: "לידור אומר לך תכלס מה צריך לעשות - והיום ברוך השם יש תוצאות",
   },
+  {
+    id: "CWC-jrannyQ",
+    name: "בר",
+    caption: "עונה לי הכי מהר שאפשר כאילו אני התלמיד הראשון שלו",
+  },
 ];
 
 const CLIPS = [
@@ -24,6 +29,10 @@ const CLIPS = [
   "--VGQpBE9Nk",
   "OwtEhYBUjPI",
   "3CGOffTHNj8",
+  "fIPlC-fbxA0",
+  "08hYUAE-D48",
+  "cn0RE_e1HVk",
+  "PjKRQqslXWY",
 ];
 
 const QuoteMark = () => (
@@ -47,7 +56,7 @@ export const Testimonials = () => {
           </h2>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {FEATURED.map((v) => (
             <figure key={v.id} className="m-0">
               <div className="relative aspect-video overflow-hidden rounded-xl border border-brand-line bg-brand-surface">

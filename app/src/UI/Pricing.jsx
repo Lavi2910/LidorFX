@@ -3,7 +3,7 @@ import { CTAButton } from "./Components/CTAButton";
 import { VideoFacade } from "./Components/VideoFacade";
 import { LINKS } from "@/lib/links";
 
-const SALE_START_DATE = "2026-09-28T00:00:00+03:00";
+const SALE_START_DATE = "2026-09-27T00:00:00+03:00";
 const SALE_END_DATE = "2026-10-08T23:59:59+03:00";
 const LAUNCH_START = new Date(SALE_START_DATE).getTime();
 const LAUNCH_END = new Date(SALE_END_DATE).getTime();
